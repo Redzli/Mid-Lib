@@ -34,8 +34,18 @@ public class MadLibs {
 	 } 
 //end the game
 
-	public static void create() {
+	public static void create(Scanner scanner) throws FileNotFoundException {
 		System.out.println("Input file name: ");
+		String inputName = scanner.next(); 
+		try{
+			File inputFile = new File(inputName);
+			while(!inputFile.exists()){
+				System.out.println("File not found, please retry");
+				inputName = scanner.next();
+			}
+		}catch(Exception e){
+			System.out.println(e);
+		}
 		Scanner file = new Scanner(System.in);// ask for original file
 		String fileName = file.next();// save that file
 		if (!fileName.equals("madlib0.txt") || !fileName.equals("madlib1.txt") || !fileName.equals("madlib2.txt")
@@ -78,21 +88,7 @@ public class MadLibs {
 
 	public static void type() {
 		String wordType;//wants to catch all the blank words with different types and ask for user's choice of word
-		// if (fileName.equals("madlib1.txt")) {
-//     	   Scanner input = new Scanner(new File("madlib1.txt"));	  
-//        }
-// 	   if (fileName.equals("madlib2.txt")) {
-//     	   Scanner input = new Scanner(new File("madlib2.txt"));
-//        }
-// 	   if (fileName.equals("madlib3.txt")) {
-//     	   Scanner input = new Scanner(new File("madlib3.txt"));
-//        }
-// 	   if (fileName.equals("madlib4.txt")) {
-//     	   Scanner input = new Scanner(new File("madlib4.txt"));
-//        }
-// 	   if (fileName.equals("madlib5.txt")) {
-//     	   Scanner input = new Scanner(new File("madlib5.txt"));
-//        }
+
 		while (input.hasNextLine()) {// check the line exist in the file
 			String line = input.nextLine();// store the whole line to variable line
 			Scanner words = new Scanner(line);// input Scanner is a string, read line, scan words, store to word
@@ -150,6 +146,11 @@ public class MadLibs {
 		System.out.println("I will ask you to provide various words and phrases to fill in a story.");
 		System.out.println("The result will be written to an output file.");// general instructions
 		// method1: asking for input words
-		inputWords();
+		boolean playOrNo = true;
+		Scanner scanner = new Scanner(System.in);
+
+		while(playOrNo == true){
+			playOrNo = inputWords(scanner);
+		}
 	}
 }
