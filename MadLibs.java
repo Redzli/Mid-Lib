@@ -12,24 +12,25 @@ import java.io.PrintStream;
 
 public class MadLibs {
 
-	public static void inputWords(String assignName) {//Is this parameter right?
-	System.out.println("(C)reate mad-lib, (V)iew mad-lib, (Q)uit?");//3 choice
-	Scanner CVQ = new Scanner(System.in);//check answer
-	String answerCVQ = CVQ.next();// save answer
-	
-	//for the three choices:
-	while (!(answerCVQ.equals("Q")||answerCVQ.equals("q"))) {//if choice is not those three
-		if (answerCVQ.equals("C")||answerCVQ.equals("c")){
-			create();//method2
-		};
-		if (answerCVQ.equals("V")||answerCVQ.equals("v")){
-			view();//method3
+	public static boolean inputWords(Scanner scanner) {//Is this parameter right?
+		System.out.println("(C)reate mad-lib, (V)iew mad-lib, (Q)uit?");//3 choice
+		String answerCVQ = scanner.next();
+		answerCVQ = answerCVQ.toUpperCase();
+		//for the three choices:
+		switch(answerCVQ){
+			case "Q":
+				return false;
+			case "C":
+				create();
+				return true;
+			case "V":
+				view();
+				return true;
+			default:
+				System.out.println("Invalid input. Please try it again.");
+				return true;
 		}
-		else{
-			return;
-			//keep asking the question when not those three choices, but I don't think thsi line works
-		}
-	
+
 	 } 
 //end the game
 
@@ -37,7 +38,7 @@ public class MadLibs {
 		System.out.println("Input file name: ");
 		Scanner file = new Scanner(System.in);// ask for original file
 		String fileName = file.next();// save that file
-		while (!fileName.equals("madlib0.txt") || !fileName.equals("madlib1.txt") || !fileName.equals("madlib2.txt")
+		if (!fileName.equals("madlib0.txt") || !fileName.equals("madlib1.txt") || !fileName.equals("madlib2.txt")
 				|| fileName.equals("madlib3.txt") || !fileName.equals("madlib4.txt")
 				|| !fileName.equals("madlib5.txt")) {
 			System.out.println("File not found. Try again: ");//try to catch the correct file name, if not match, keep asking
@@ -128,6 +129,20 @@ public class MadLibs {
 	}
 		//replace words in the file...how?
 		//print the new paragraph to the output...how?
+	}
+	
+	public static String checkVowel(char input){
+		String a;
+		input = Character.toUpperCase(input);
+		if( input == 'A' || input == 'I' 
+			|| input == 'E' ||
+			input == 'O' || input == 'U'){
+			a = " an";
+		}
+		else{
+			a = " a";
+		}
+		return a;
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
